@@ -1,0 +1,31 @@
+{
+    "name": "hryvinskyi/magento2-seo-robots-admin-ui",
+    "version": "1.0.0",
+    "description": "N/A",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*",
+        "hryvinskyi/magento2-seo-admin-ui": "1.0.*",
+        "hryvinskyi/magento2-seo-robots": "1.0.*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "authors": [
+        {
+            "name": "Volodymyr Hryvinskyi",
+            "email": "volodymyr@hryvinskyi.com"
+        }
+    ],
+    "license": [
+        "MIT"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Hryvinskyi\\SeoRobotsAdminUi\\": ""
+        }
+    }
+}

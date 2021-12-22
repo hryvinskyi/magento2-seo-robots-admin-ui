@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2021. All rights reserved.
+  ~ @author: Volodymyr Hryvinskyi <mailto:volodymyr@hryvinskyi.com>
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="hryvinskyi_seo">
+            <resource>Hryvinskyi_Seo::section_seo_robots</resource>
+            <group id="robots" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="100">
+                <label>Meta Robots</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="meta_robots" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Robots Meta Header</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\MetaRobots</frontend_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\ArraySerialized</backend_model>
+                    <comment>If two or more patterns match, the pattern with higher priority will be applied.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="https_meta_robots" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Robots Meta Header for HTTPS</label>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\MetaRobots</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="is_noindex_nofollow_for_no_route_index" translate="label" type="select" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Set NOINDEX,NOFOLLOW for 404 page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
