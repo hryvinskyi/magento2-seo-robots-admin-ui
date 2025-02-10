@@ -1,12 +1,12 @@
 {
     "name": "hryvinskyi/magento2-seo-robots-admin-ui",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "N/A",
     "type": "magento2-module",
     "require": {
         "magento/framework": "*",
         "hryvinskyi/magento2-seo-admin-ui": "1.0.*",
-        "hryvinskyi/magento2-seo-robots": "1.0.*"
+        "hryvinskyi/magento2-seo-robots": "^1.0.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"

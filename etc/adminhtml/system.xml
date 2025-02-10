@@ -42,6 +42,23 @@
                         <field id="enabled">1</field>
                     </depends>
                 </field>
+                <field id="paginated_robots" translate="label" type="select" sortOrder="50" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Add robots to '?p=' to paginated content</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="paginated_robots_type" translate="label" type="select" sortOrder="60" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Robots Meta Header for paginated content</label>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\MetaRobots</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="paginated_robots">1</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>
