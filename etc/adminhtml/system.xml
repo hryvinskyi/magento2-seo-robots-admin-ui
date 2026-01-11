@@ -59,6 +59,14 @@
                         <field id="paginated_robots">1</field>
                     </depends>
                 </field>
+                <field id="robots_xheader_enabled" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable X-Robots-Tag Header</label>
+                    <comment><![CDATA[If enabled, the X-Robots-Tag header will mirror the robots meta tag directives from the site. If disabled, only the meta tag will be used.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>
