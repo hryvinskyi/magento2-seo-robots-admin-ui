@@ -13,31 +13,26 @@
                 <label>Meta Robots</label>
                 <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Enabled</label>
+                    <label>Enable SEO Robots Management</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="meta_robots" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="1"
+                <field id="meta_robots" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Robots Meta Header</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\MetaRobots</frontend_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\ArraySerialized</backend_model>
-                    <comment>If two or more patterns match, the pattern with higher priority will be applied.</comment>
+                    <label>Meta Robots Tag Rules</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\MetaRobotsRules</frontend_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
+                    <comment><![CDATA[Configure meta robots directives per URL pattern. If multiple patterns match, highest priority wins.]]></comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="https_meta_robots" translate="label" type="select" sortOrder="30" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Robots Meta Header for HTTPS</label>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\MetaRobots</source_model>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                </field>
-                <field id="is_noindex_nofollow_for_no_route_index" translate="label" type="select" sortOrder="40"
+                <field id="no_route_robots_types" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Set NOINDEX,NOFOLLOW for 404 page</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <label>Robots Directives for 404 Pages</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                    <comment><![CDATA[Select multiple directives to apply to 404 pages]]></comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
@@ -50,10 +45,13 @@
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="paginated_robots_type" translate="label" type="select" sortOrder="60" showInDefault="1"
+                <field id="paginated_robots_type" translate="label comment" type="multiselect" sortOrder="60" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Robots Meta Header for paginated content</label>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\MetaRobots</source_model>
+                    <label>Robots Directives for Paginated Content</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                    <comment><![CDATA[Select multiple directives to apply to pages with ?p= parameter.]]></comment>
                     <depends>
                         <field id="enabled">1</field>
                         <field id="paginated_robots">1</field>
@@ -63,8 +61,15 @@
                     <label>Enable X-Robots-Tag Header</label>
                     <comment><![CDATA[If enabled, the X-Robots-Tag header will mirror the robots meta tag directives from the site. If disabled, only the meta tag will be used.]]></comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="xrobots_rules" translate="label comment" sortOrder="80" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>X-Robots-Tag HTTP Header Rules</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\XRobotsTagRules</frontend_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
+                    <comment><![CDATA[Configure X-Robots-Tag HTTP header per URL pattern. Supports bot-specific directives (e.g., googlebot: noindex).]]></comment>
                     <depends>
-                        <field id="enabled">1</field>
+                        <field id="robots_xheader_enabled">1</field>
                     </depends>
                 </field>
             </group>

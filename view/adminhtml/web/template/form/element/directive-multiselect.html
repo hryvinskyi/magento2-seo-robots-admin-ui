@@ -1,0 +1,31 @@
+<!--
+  ~ Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+  ~ Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+  ~ GitHub: https://github.com/hryvinskyi
+  -->
+
+<div data-bind="afterRender: initRobotsSelector.bind($data)" style="display: inline-block">
+
+    <!-- Hidden select element (standard multiselect) -->
+    <select multiple="multiple"
+            class="admin__control-multiselect directive-multiselect-hidden"
+            data-bind="
+                attr: {
+                    name: inputName,
+                    id: uid,
+                    disabled: disabled,
+                    'aria-describedby': noticeId,
+                    placeholder: placeholder
+                },
+                hasFocus: focused,
+                options: options,
+                optionsValue: 'value',
+                optionsText: 'label',
+                selectedOptions: value">
+    </select>
+
+    <!-- Container for robots tag selector widget -->
+    <div class="robots-tag-selector-wrapper"
+         data-bind="attr: { 'data-enable-bot-names': enableBotNames }">
+    </div>
+</div>

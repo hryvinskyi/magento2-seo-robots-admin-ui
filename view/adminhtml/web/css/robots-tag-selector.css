@@ -1,0 +1,387 @@
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+
+/* Robots Tag Selector Component */
+.robots-tag-selector {
+    position: relative;
+    width: 100%;
+}
+
+.robots-tag-selector-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: text;
+    box-sizing: border-box;
+    border: 1px solid #adadad;
+    border-radius: 1px;
+    color: #303030;
+    background-color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+    padding: .3rem;
+}
+
+.robots-tag-selector-container:hover {
+    border-color: #bbb;
+}
+
+.robots-tag-selector-container.focused {
+    border-color: #2196F3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.robots-tag-selector-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 100%;
+    align-items: center;
+}
+
+.robots-tag-selector-tag {
+    display: inline-flex;
+    align-items: center;
+    background: #2196F3;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 13px;
+    line-height: 1.4;
+    max-width: 100%;
+    transition: all 0.3s ease;
+}
+
+.robots-tag-selector-tag.custom {
+    background: #ff9800;
+}
+
+.robots-tag-selector-tag.with-value {
+    background: #9C27B0;
+}
+
+.robots-tag-selector-tag-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.robots-tag-selector-tag-remove {
+    cursor: pointer;
+    opacity: 0.8;
+    font-weight: bold;
+    padding: 0 4px;
+    transition: opacity 0.3s ease;
+    position: relative;
+    right: -3px;
+    font-weight: 100;
+}
+
+.robots-tag-selector-tag-remove:hover {
+    opacity: 1;
+}
+
+.robots-tag-selector-wrapper {
+    position: relative;
+}
+
+.robots-tag-selector-input-wrapper {
+    display: inline-flex;
+    flex: 1;
+    min-width: 80px;
+    position: relative;
+}
+
+.robots-tag-selector-input {
+    border: none !important;
+    outline: none;
+    font-size: 11px !important;
+    padding: 0 !important;
+    flex: 1;
+    min-width: 80px;
+    font-family: inherit;
+    background: transparent !important;
+    height: 25px !important;
+    line-height: 25px !important;
+}
+
+.robots-tag-selector-input::placeholder {
+    color: #999;
+}
+
+.robots-tag-selector-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    min-width: 420px;
+    width: 100%;
+}
+
+.robots-tag-selector-dropdown.show {
+    display: block;
+}
+
+.robots-tag-selector-option-group-label {
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.robots-tag-selector-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.robots-tag-selector-option:last-child {
+    border-bottom: none;
+}
+
+.robots-tag-selector-option:hover {
+    background: #f5f5f5;
+}
+
+.robots-tag-selector-option.selected {
+    background: #e3f2fd;
+    color: #2196F3;
+    font-weight: 500;
+}
+
+.robots-tag-selector-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.robots-tag-selector-option.disabled:hover {
+    background: transparent;
+}
+
+.robots-tag-selector-option-main {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.robots-tag-selector-option-description {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.robots-tag-selector-option.with-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.robots-tag-selector-option.with-input input,
+.robots-tag-selector-option.with-input select {
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 60%;
+    margin-right: 10px;
+    box-sizing: border-box;
+    height: 30px;
+}
+
+.robots-tag-selector-option.with-input input:focus,
+.robots-tag-selector-option.with-input select:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+.robots-tag-selector-option.with-input button {
+    padding: 6px 12px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    align-self: flex-start;
+    transition: all 0.3s ease;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.robots-tag-selector-option.with-input button:hover {
+    background: #1976D2;
+}
+
+.robots-tag-selector-no-results {
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+.robots-tag-selector-create-custom {
+    padding: 10px 12px;
+    background: #f8f8f8;
+    border-top: 1px solid #ddd;
+    cursor: pointer;
+    color: #2196F3;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: sticky;
+    bottom: 0;
+}
+
+.robots-tag-selector-create-custom:hover {
+    background: #efefef;
+}
+
+.robots-tag-selector-create-custom-icon {
+    margin-right: 6px;
+}
+
+.robots-tag-selector-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.robots-tag-selector-dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.robots-tag-selector-dropdown::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.robots-tag-selector-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Bot Name Section - Inline Editable */
+.robots-tag-bot-section {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    margin-right: 2px;
+}
+
+.robots-tag-bot-display {
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 500;
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    transition: all 0.2s ease;
+    min-width: 50px;
+    text-align: center;
+}
+
+.robots-tag-bot-display:hover {
+    background: rgba(0, 0, 0, 0.25);
+    border-style: solid;
+}
+
+.robots-tag-bot-section.has-bot .robots-tag-bot-display {
+    background: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+.robots-tag-bot-input {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    border: 2px solid #2196F3 !important;
+    border-radius: 3px !important;
+    color: #333 !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    min-width: 100px;
+    outline: none !important;
+    font-family: inherit;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    width: auto !important;
+}
+
+.robots-tag-bot-section.editing .robots-tag-bot-display {
+    visibility: hidden;
+}
+
+.robots-tag-bot-section.editing .robots-tag-bot-input {
+    display: block;
+}
+
+.robots-tag-bot-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.robots-tag-separator {
+    margin: 0 4px 0 2px;
+    font-weight: bold;
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+/* Tooltip Styles */
+.robots-tag-selector-tag {
+    position: relative;
+    /* Ensure relative positioning for absolute tooltip */
+}
+
+.robots-tag-selector-tag[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    margin-bottom: 6px;
+    pointer-events: none;
+    line-height: 1.2;
+}
+
+.robots-tag-selector-tag[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+    z-index: 1000;
+    margin-bottom: 0px;
+}

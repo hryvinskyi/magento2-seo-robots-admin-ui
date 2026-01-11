@@ -1,12 +1,12 @@
 {
     "name": "hryvinskyi/magento2-seo-robots-admin-ui",
-    "version": "1.0.4",
-    "description": "N/A",
+    "version": "2.0.0",
+    "description": "Admin UI for SEO Robots module with flexible directive management and multiselect interface",
     "type": "magento2-module",
     "require": {
         "magento/framework": "*",
         "hryvinskyi/magento2-seo-admin-ui": "1.0.*",
-        "hryvinskyi/magento2-seo-robots": "^1.0.5"
+        "hryvinskyi/magento2-seo-robots": "^2.0.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
