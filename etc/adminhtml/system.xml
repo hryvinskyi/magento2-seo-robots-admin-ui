@@ -51,10 +51,31 @@
                     <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
                     <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
                     <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select multiple directives to apply to pages with ?p= parameter.]]></comment>
+                    <comment><![CDATA[Select multiple directives to apply to pages with only ?p= parameter (no filters).]]></comment>
                     <depends>
                         <field id="enabled">1</field>
                         <field id="paginated_robots">1</field>
+                    </depends>
+                </field>
+                <field id="paginated_filtered_robots" translate="label" type="select" sortOrder="62" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Add robots to paginated content with filters</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Apply robots to pages with ?p= and additional query parameters (e.g., filters).]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="paginated_filtered_robots_type" translate="label comment" type="textarea" sortOrder="64" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Robots Directives for Paginated Content with Filters</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                    <comment><![CDATA[Select directives to apply to pages with ?p= and other query parameters (pagination + filters).]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="paginated_filtered_robots">1</field>
                     </depends>
                 </field>
                 <field id="robots_xheader_enabled" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
