@@ -119,10 +119,31 @@
                     <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
                     <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
                     <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select X-Robots-Tag directives to apply to paginated pages via HTTP header. If empty, falls back to meta robots paginated directives.]]></comment>
+                    <comment><![CDATA[Select X-Robots-Tag directives to apply to paginated pages (only ?p=) via HTTP header. If empty, falls back to meta robots paginated directives.]]></comment>
                     <depends>
                         <field id="robots_xheader_enabled">1</field>
                         <field id="xrobots_paginated_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="xrobots_paginated_filtered_enabled" translate="label" type="select" sortOrder="112" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Add X-Robots-Tag to Paginated Content with Filters</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[If enabled, applies X-Robots-Tag header to paginated pages with additional query parameters (e.g., filters).]]></comment>
+                    <depends>
+                        <field id="robots_xheader_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="xrobots_paginated_filtered_types" translate="label comment" type="textarea" sortOrder="114" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>X-Robots-Tag Directives for Paginated Content with Filters</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                    <comment><![CDATA[Select X-Robots-Tag directives for pages with ?p= and other query parameters. If empty, falls back to meta robots paginated filtered directives.]]></comment>
+                    <depends>
+                        <field id="robots_xheader_enabled">1</field>
+                        <field id="xrobots_paginated_filtered_enabled">1</field>
                     </depends>
                 </field>
             </group>
