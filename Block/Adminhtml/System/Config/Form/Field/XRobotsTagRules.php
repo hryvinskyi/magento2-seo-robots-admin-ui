@@ -10,9 +10,12 @@ declare(strict_types=1);
 namespace Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field;
 
 use Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\Renderer\DirectiveMultiselect;
+use Hryvinskyi\SeoRobotsApi\Api\RobotsListInterface;
+use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Framework\DataObject;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
 
 /**
  * Dynamic field array for X-Robots-Tag HTTP header rules configuration
@@ -24,6 +27,15 @@ class XRobotsTagRules extends AbstractFieldArray
      */
     private $directiveRenderer;
 
+    public function __construct(
+        Context $context,
+        private readonly RobotsListInterface $robotsList,
+        array $data = [],
+        ?SecureHtmlRenderer $secureRenderer = null
+    ) {
+        parent::__construct($context, $data, $secureRenderer);
+    }
+
     /**
      * @inheritDoc
      * @throws LocalizedException
@@ -33,7 +45,7 @@ class XRobotsTagRules extends AbstractFieldArray
         $this->addColumn('priority', [
             'label' => __('Priority'),
             'class' => 'validate-number',
-            'style' => 'width: 80px'
+            'style' => 'width: 50px'
         ]);
 
         $this->addColumn('pattern', [
@@ -49,14 +61,9 @@ class XRobotsTagRules extends AbstractFieldArray
 
         $this->_addAfter = false;
         $this->_addButtonLabel = __('Add Rule');
+        parent::_construct();
     }
 
-    /**
-     * Get directive renderer
-     *
-     * @return DirectiveMultiselect
-     * @throws LocalizedException
-     */
     /**
      * Get directive renderer
      *
@@ -73,147 +80,8 @@ class XRobotsTagRules extends AbstractFieldArray
             );
             // Enable bot names per directive for X-Robots-Tag
             $this->directiveRenderer->setEnableBotNames(true);
-            $this->directiveRenderer->setDirectives($this->getXRobotsTagDirectives());
+            $this->directiveRenderer->setDirectives($this->robotsList->getRobotsDirectives());
         }
         return $this->directiveRenderer;
-    }
-
-    /**
-     * Get directives for X-Robots-Tag
-     *
-     * @return array
-     */
-    private function getXRobotsTagDirectives(): array
-    {
-        return [
-            'indexing' => [
-                [
-                    'value' => 'all',
-                    'label' => 'all',
-                    'description' => 'No restrictions for indexing or serving (default)',
-                    'conflicts' => ['noindex', 'nofollow', 'none']
-                ],
-                [
-                    'value' => 'index',
-                    'label' => 'index',
-                    'description' => 'Allow different indexing',
-                    'conflicts' => ['noindex', 'none']
-                ],
-                [
-                    'value' => 'follow',
-                    'label' => 'follow',
-                    'description' => 'Follow links on this page',
-                    'conflicts' => ['nofollow', 'none']
-                ],
-                [
-                    'value' => 'noindex',
-                    'label' => 'noindex',
-                    'description' => 'Do not show this page in search results',
-                    'conflicts' => ['index', 'all']
-                ],
-                [
-                    'value' => 'nofollow',
-                    'label' => 'nofollow',
-                    'description' => 'Do not follow links on this page',
-                    'conflicts' => ['follow', 'all']
-                ],
-                [
-                    'value' => 'none',
-                    'label' => 'none',
-                    'description' => 'Equivalent to noindex, nofollow',
-                    'conflicts' => ['index', 'follow', 'all']
-                ]
-            ],
-            'snippets' => [
-                [
-                    'value' => 'noarchive',
-                    'label' => 'noarchive',
-                    'description' => 'Do not show a cached link in search results'
-                ],
-                [
-                    'value' => 'nosnippet',
-                    'label' => 'nosnippet',
-                    'description' => 'Do not show a text snippet or video preview'
-                ],
-                [
-                    'value' => 'max-snippet',
-                    'label' => 'max-snippet',
-                    'description' => 'Maximum text length of snippet',
-                    'hasInput' => true,
-                    'inputType' => 'number',
-                    'inputPlaceholder' => 'Enter character count',
-                    'formatter' => 'numericColon'
-                ],
-                [
-                    'value' => 'max-image-preview',
-                    'label' => 'max-image-preview',
-                    'description' => 'Maximum size of image preview',
-                    'hasInput' => true,
-                    'inputType' => 'select',
-                    'inputOptions' => ['none', 'standard', 'large'],
-                    'formatter' => 'standardColon'
-                ],
-                [
-                    'value' => 'max-video-preview',
-                    'label' => 'max-video-preview',
-                    'description' => 'Maximum video preview duration in seconds',
-                    'hasInput' => true,
-                    'inputType' => 'number',
-                    'inputPlaceholder' => 'Enter seconds (-1 for no limit)',
-                    'formatter' => 'numericColon'
-                ]
-            ],
-            'images' => [
-                [
-                    'value' => 'noimageindex',
-                    'label' => 'noimageindex',
-                    'description' => 'Do not index images on this page'
-                ]
-            ],
-            'translations' => [
-                [
-                    'value' => 'notranslate',
-                    'label' => 'notranslate',
-                    'description' => 'Do not offer translation of this page'
-                ]
-            ],
-            'crawling' => [
-                [
-                    'value' => 'unavailable_after',
-                    'label' => 'unavailable_after',
-                    'description' => 'Do not show after specified date/time',
-                    'hasInput' => true,
-                    'inputType' => 'datetime',
-                    'inputPlaceholder' => 'YYYY-MM-DD HH:MM:SS UTC',
-                    'formatter' => 'standardColon'
-                ],
-                [
-                    'value' => 'indexifembedded',
-                    'label' => 'indexifembedded',
-                    'description' => 'Allow indexing when embedded via iframe'
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * Prepare existing row data object
-     *
-     * @param DataObject $row
-     * @return void
-     * @throws LocalizedException
-     */
-    protected function _prepareArrayRow(DataObject $row): void
-    {
-        $options = [];
-
-        $xrobotsDirectives = $row->getData('xrobots_directives');
-        if ($xrobotsDirectives && is_array($xrobotsDirectives)) {
-            foreach ($xrobotsDirectives as $directive) {
-                $options['option_' . $this->getDirectiveRenderer()->calcOptionHash($directive)] = 'selected="selected"';
-            }
-        }
-
-        $row->setData('option_extra_attrs', $options);
     }
 }

@@ -26,6 +26,7 @@ class RobotsTagSelectorField extends Field
         /** @var DirectiveMultiselect $renderer */
         $renderer = $this->getLayout()->createBlock(DirectiveMultiselect::class);
 
+        $renderer->setElement($element);
         $renderer->setInputName($element->getName());
         $renderer->setInputId($element->getHtmlId());
         $renderer->setValue($element->getValue());

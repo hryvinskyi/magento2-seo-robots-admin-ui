@@ -10,5 +10,6 @@
     <head>
         <css src="Hryvinskyi_SeoRobotsAdminUi::css/styles.css"/>
         <css src="Hryvinskyi_SeoRobotsAdminUi::css/robots-tag-selector.css"/>
+        <script src="Hryvinskyi_SeoRobotsAdminUi/js/robots-directive-init.js"/>
     </head>
 </page>

@@ -15,20 +15,12 @@ use Magento\Framework\View\Element\Html\Select;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 
 /**
- * Multiselect renderer for robots directives using custom RobotsTagSelector
+ * Renderer for robots directives using custom RobotsTagSelector with JSON storage
  */
 class DirectiveMultiselect extends Select
 {
     private bool $enableBotNames = false;
-
-    public function __construct(
-        Context $context,
-        private readonly RobotsListInterface $robotsList,
-        private readonly SecureHtmlRenderer $secureHtmlRenderer,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-    }
+    private array $directives = [];
 
     /**
      * Enable bot name per directive
@@ -50,7 +42,11 @@ class DirectiveMultiselect extends Select
      */
     public function setInputName(string $value)
     {
-        return $this->setData('name', $value . '[]');
+        // Ensure we don't use array syntax correctly for single JSON string field
+        if (str_ends_with($value, '[]')) {
+            $value = substr($value, 0, -2);
+        }
+        return $this->setData('name', $value);
     }
 
     /**
@@ -65,52 +61,6 @@ class DirectiveMultiselect extends Select
     }
 
     /**
-     * Render HTML
-     *
-     * @return string
-     */
-    public function _toHtml(): string
-    {
-        if (!$this->getOptions()) {
-            $basicDirectives = $this->robotsList->getBasicDirectives();
-            $options = [];
-
-            foreach ($basicDirectives as $directive) {
-                $options[] = [
-                    'value' => $directive,
-                    'label' => strtoupper($directive)
-                ];
-            }
-            $this->setOptions($options);
-        }
-
-        // Add class for identification and hide the original select
-        $this->setClass('directive-multiselect-hidden');
-        $this->setData('style', 'display:none !important');
-        $this->setExtraParams('multiple="multiple"');
-
-        $html = parent::_toHtml();
-
-        // Add extra CSS to ensure it's hidden overriding any inline styles if necessary
-        $html .= $this->secureHtmlRenderer->renderTag('style', [], '.directive-multiselect-hidden { display: none !important; }', false);
-
-        // Add container for the custom selector
-        // We use a wrapper div that will be populated by the plugin
-        $containerId = $this->getId() . '_container';
-
-        $html .= '<div id="' . $containerId . '" class="robots-tag-selector-wrapper" data-enable-bot-names="' . ($this->enableBotNames ? 'true' : 'false') . '"></div>';
-
-        $html .= $this->getInitScript();
-
-        return $html;
-    }
-
-    /**
-     * @var array
-     */
-    private $directives = [];
-
-    /**
      * Set directives configuration
      *
      * @param array $directives
@@ -123,139 +73,68 @@ class DirectiveMultiselect extends Select
     }
 
     /**
-     * Get Initialization Script
+     * Render HTML
      *
      * @return string
      */
-    private function getInitScript(): string
+    public function _toHtml(): string
     {
+        // Prepare initial value
+        $values = $this->getValue();
+        if (is_array($values)) {
+            $valueData = json_encode($values);
+        } elseif (is_string($values)) {
+            // Check if it looks like JSON
+            $decoded = json_decode($values);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $valueData = $values;
+            } else {
+                // Legacy CSV or raw string handling if needed
+                $valueData = json_encode([$values]);
+            }
+        } else {
+            $valueData = '[]';
+        }
+
+        $textareaId = $this->getId();
+        $textareaName = $this->getName();
         $directivesJson = json_encode($this->directives ?: [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 
-        return $this->secureHtmlRenderer->renderTag(
-            'script',
-            [],
-            <<<JS
-require(['jquery', 'robotsTagSelector'], function($) {
-    $(document).ready(function() {
-        var directives = $directivesJson;
-        
-        var initSelector = function(selectElement) {
-            var \$select = $(selectElement);
+        // Detect if this is a template row for dynamic rows
+        $isTemplateRow = strpos($textareaName, '<%- _id %>') !== false;
 
-            // Avoid double initialization
-            if (\$select.data('initialized')) {
-                return;
-            }
-
-            var \$wrapper = \$select.next('.robots-tag-selector-wrapper');
-            if (!\$wrapper.length) {
-                // If wrapper is not immediately next (e.g. some magento styling), try to find by ID
-                var wrapperId = \$select.attr('id') + '_container';
-                \$wrapper = $('#' + wrapperId);
-            }
-
-            if (!\$wrapper.length) {
-                // Create wrapper if missing
-                \$wrapper = $('<div class="robots-tag-selector-wrapper"></div>');
-                \$select.after(\$wrapper);
-            }
-
-            // Check if bot names per directive are enabled
-            var enableBotNames = \$wrapper.data('enable-bot-names') === 'true' || \$wrapper.attr('data-enable-bot-names') === 'true';
-
-            // Get initial values from data-init-value attribute
-            var initialValues = [];
-
-            \$select.find('option:selected').each(function() {
-              initialValues.push($(this).val());
-            });
-            
-            // Initialize the plugin on the wrapper
-            var options = {
-                placeholder: 'Add directives...',
-                enableBotNames: enableBotNames,
-                onChange: function(values) {
-                    // 1. Clear current selection
-                    \$select.find('option').prop('selected', false);
-
-                    // 2. Process each new value
-                    values.forEach(function(val) {
-                        var \$option = \$select.find('option[value="' + val + '"]');
-
-                        if (\$option.length) {
-                            // Select existing option
-                            \$option.prop('selected', true);
-                        } else {
-                            // Create new option for custom tags/values (with bot name if included)
-                            \$select.append(
-                                $('<option></option>').val(val).text(val).prop('selected', true)
-                            );
-                        }
-                    });
-
-                    // Trigger change on select to notify other listeners (if any)
-                    \$select.trigger('change');
-                }
-            };
-
-            if (directives && Object.keys(directives).length > 0) {
-                options.directives = directives;
-            }
-
-            \$wrapper.robotsTagSelector(options);
-
-            // Set initial values in the plugin
-            if (initialValues && initialValues.length > 0) {
-                // Use a short timeout to ensure the plugin is fully initialized
-                setTimeout(function() {
-                    \$wrapper.robotsTagSelector('setValue', initialValues);
-                }, 50);
-            }
-
-            \$select.data('initialized', true);
-        };
-
-        // Initialize all existing instances
-        $('.directive-multiselect-hidden').each(function() {
-            initSelector(this);
-        });
-
-        // Handle dynamic rows addition
-        $(document).on('contentUpdated', function() {
-            $('.directive-multiselect-hidden').each(function() {
-                initSelector(this);
-            });
-        });
-        
-        // Use MutationObserver as a backup for dynamic rows
-        var observer = new MutationObserver(function(mutations) {
-            var shouldCheck = false;
-            mutations.forEach(function(mutation) {
-                if (mutation.addedNodes.length) {
-                    shouldCheck = true;
-                }
-            });
-            
-            if (shouldCheck) {
-                $('.directive-multiselect-hidden').each(function() {
-                    initSelector(this);
-                });
-            }
-        });
-        
-        // Observe config form
-        var configForm = document.querySelector('#config-edit-form');
-        if (configForm) {
-            observer.observe(configForm, { childList: true, subtree: true });
+        // For template rows, don't escape the ID/name as they contain underscore.js template syntax
+        // that needs to be preserved for Magento's dynamic row functionality
+        if ($isTemplateRow) {
+            $escapedId = $textareaId;
+            $escapedName = $textareaName;
+        } else {
+            $escapedId = $this->escapeHtmlAttr($textareaId);
+            $escapedName = $this->escapeHtmlAttr($textareaName);
         }
-        
-        $('.field-array').each(function() {
-            observer.observe(this, { childList: true, subtree: true });
-        });
-    });
-});
-JS,
-    false
-);
+
+        $element = $this->getData('element');
+        $disabled = '';
+
+        if ($element) {
+            $disabled = $this->getElement()->getCanUseWebsiteValue()
+                || $this->getElement()->getCanUseDefaultValue()
+                || $this->getElement()->getCanRestoreToDefault();
+            $disabled = $disabled ? ' disabled="disabled"' : '';
+        }
+
+        // Render hidden textarea with configuration attached as data attribute
+        // Note: template rows are skipped in JavaScript by checking for <%- _id %> in name
+        return sprintf(
+            '<div class="directive-multiselect-container">' .
+            '<textarea id="%s" name="%s" %s style="display:none !important;" class="directive-multiselect-json" data-directives=\'%s\' data-enable-bot-names=\'%s\'>%s</textarea>' .
+            '</div>',
+            $escapedId,
+            $escapedName,
+            $disabled,
+            $directivesJson,
+            $this->enableBotNames ? 'true' : 'false',
+            $this->escapeHtml($valueData)
+        );
     }
 }

@@ -29,6 +29,21 @@
     border-color: #bbb;
 }
 
+.robots-tag-selector-container.disabled {
+    background-color: #e9e9e9;
+    border-color: #adadad;
+    color: #303030;
+    opacity: .5;
+}
+
+.robots-tag-selector-container.disabled {
+    cursor: not-allowed;
+}
+
+.robots-tag-selector-container.disabled * {
+    pointer-events: none!important;
+}
+
 .robots-tag-selector-container.focused {
     border-color: #2196F3;
     box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
@@ -55,12 +70,20 @@
     transition: all 0.3s ease;
 }
 
+.robots-tag-selector-tag + .robots-tag-selector-input-wrapper {
+    padding-left: 0;
+}
+
 .robots-tag-selector-tag.custom {
     background: #ff9800;
 }
 
 .robots-tag-selector-tag.with-value {
     background: #9C27B0;
+}
+
+.robots-tag-selector-tag.with-bot {
+    background: #00897B;
 }
 
 .robots-tag-selector-tag-text {
@@ -94,12 +117,13 @@
     flex: 1;
     min-width: 80px;
     position: relative;
+    padding-left: .7rem;
 }
 
 .robots-tag-selector-input {
     border: none !important;
     outline: none;
-    font-size: 11px !important;
+    font-size: 13px !important;
     padding: 0 !important;
     flex: 1;
     min-width: 80px;
@@ -107,10 +131,6 @@
     background: transparent !important;
     height: 25px !important;
     line-height: 25px !important;
-}
-
-.robots-tag-selector-input::placeholder {
-    color: #999;
 }
 
 .robots-tag-selector-dropdown {
@@ -205,6 +225,9 @@
     margin-right: 10px;
     box-sizing: border-box;
     height: 30px;
+    line-height: 1 !important;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .robots-tag-selector-option.with-input input:focus,
@@ -384,4 +407,47 @@
     border-color: #333 transparent transparent transparent;
     z-index: 1000;
     margin-bottom: 0px;
+}
+
+/* Datetime Input Wrapper */
+.robots-tag-datetime-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.robots-tag-datetime-wrapper .robots-tag-date-input {
+    width: 140px !important;
+    flex: none;
+    margin-right: 0!important;
+}
+
+.robots-tag-datetime-wrapper .robots-tag-time-input {
+    width: 100px !important;
+    flex: none;
+    margin-right: 0!important;
+}
+
+.robots-tag-datetime-separator {
+    font-size: 12px;
+    color: #666;
+    padding: 0 2px;
+}
+
+.robots-tag-datetime-hint {
+    font-size: 11px;
+    color: #999;
+    font-style: italic;
+}
+
+.robots-tag-input-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.robots-tag-input-form .robots-tag-selector-option-main {
+    width: 100%;
+    margin-bottom: 4px;
 }

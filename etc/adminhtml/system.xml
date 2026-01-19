@@ -26,7 +26,7 @@
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="no_route_robots_types" translate="label" type="select" sortOrder="40"
+                <field id="no_route_robots_types" translate="label" type="textarea" sortOrder="40"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Robots Directives for 404 Pages</label>
                     <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
@@ -45,7 +45,7 @@
                         <field id="enabled">1</field>
                     </depends>
                 </field>
-                <field id="paginated_robots_type" translate="label comment" type="multiselect" sortOrder="60" showInDefault="1"
+                <field id="paginated_robots_type" translate="label comment" type="textarea" sortOrder="60" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Robots Directives for Paginated Content</label>
                     <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
@@ -70,6 +70,38 @@
                     <comment><![CDATA[Configure X-Robots-Tag HTTP header per URL pattern. Supports bot-specific directives (e.g., googlebot: noindex).]]></comment>
                     <depends>
                         <field id="robots_xheader_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="xrobots_no_route_types" translate="label comment" type="textarea" sortOrder="90"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>X-Robots-Tag Directives for 404 Pages</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                    <comment><![CDATA[Select X-Robots-Tag directives to apply to 404 pages via HTTP header. If empty, falls back to meta robots 404 directives.]]></comment>
+                    <depends>
+                        <field id="robots_xheader_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="xrobots_paginated_enabled" translate="label" type="select" sortOrder="100" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Add X-Robots-Tag to '?p=' Paginated Content</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[If enabled, applies X-Robots-Tag header to paginated pages (page > 1).]]></comment>
+                    <depends>
+                        <field id="robots_xheader_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="xrobots_paginated_types" translate="label comment" type="textarea" sortOrder="110" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>X-Robots-Tag Directives for Paginated Content</label>
+                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                    <comment><![CDATA[Select X-Robots-Tag directives to apply to paginated pages via HTTP header. If empty, falls back to meta robots paginated directives.]]></comment>
+                    <depends>
+                        <field id="robots_xheader_enabled">1</field>
+                        <field id="xrobots_paginated_enabled">1</field>
                     </depends>
                 </field>
             </group>

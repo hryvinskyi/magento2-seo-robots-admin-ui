@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (c) 2026. All rights reserved.
+  ~ @author: Volodymyr Hryvinskyi <mailto:volodymyr@hryvinskyi.com>
+  -->
+
+<div data-bind="afterRender: initRobotsSelector.bind($data)" class="robots-textarea-container">
+
+    <!-- Hidden input to store the actual value for form submission -->
+    <input type="hidden"
+           class="robots-hidden-value"
+           data-bind="attr: { name: inputName, id: uid }, value: value() || '[]'"/>
+
+    <!-- Widget container -->
+    <div class="robots-tag-selector-wrapper"
+         data-bind="attr: { 'data-enable-bot-names': enableBotNames }"
+         style="margin-bottom: 10px;">
+    </div>
+
+    <!-- Visible JSON textarea for direct editing -->
+    <details style="margin-top: 10px;">
+        <summary style="cursor: pointer; color: #006bb4; font-size: 12px;">Edit JSON directly</summary>
+        <textarea class="robots-json-textarea admin__control-textarea"
+                  rows="4"
+                  style="width: 100%; margin-top: 5px; font-family: monospace; font-size: 12px;"
+                  data-bind="value: getJsonValue()"
+                  placeholder='[{"value":"noindex","bot":"","modification":""}]'></textarea>
+    </details>
+</div>
