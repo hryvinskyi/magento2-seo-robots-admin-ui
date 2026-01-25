@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+  * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+  * GitHub: https://github.com/hryvinskyi
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminConfigurationSetDirectiveActionGroup">
+        <annotations>
+            <description>Sets the directive in configuration page.</description>
+        </annotations>
+        <arguments>
+            <argument name="rowId" type="string"/>
+            <argument name="directive" type="string"/>
+        </arguments>
+
+        <uncheckOption selector="{{rowId}} .config-inherit" stepKey="uncheckUseDefault"/>
+        <click stepKey="clickOnRobotsTagSelectorInput" selector="{{rowId}} .robots-tag-selector-tag-remove"/>
+        <wait stepKey="wait1s" time="1"/>
+        <click stepKey="clickOnRobotsTagSelectorInput2" selector="{{rowId}} .robots-tag-selector-input"/>
+        <waitForElementVisible selector="{{rowId}} .robots-tag-selector-dropdown.show" stepKey="waitOnRobotsTagSelectorInput"/>
+        <click stepKey="clickOnSelectedDirective" selector="{{rowId}} [data-value={{directive}}]"/>
+    </actionGroup>
+</actionGroups>

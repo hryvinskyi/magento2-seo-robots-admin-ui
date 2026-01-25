@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+  * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+  * GitHub: https://github.com/hryvinskyi
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminSetNoRouteRobotsDirectivesActionGroup">
+        <annotations>
+            <description>Sets the meta robots directives for 404 (noroute) pages.</description>
+        </annotations>
+        <arguments>
+            <argument name="directives" type="string" defaultValue="[{&quot;value&quot;:&quot;noindex&quot;,&quot;bot&quot;:&quot;&quot;,&quot;modification&quot;:&quot;&quot;},{&quot;value&quot;:&quot;nofollow&quot;,&quot;bot&quot;:&quot;&quot;,&quot;modification&quot;:&quot;&quot;}]"/>
+        </arguments>
+
+        <uncheckOption selector="{{AdminSeoRobotsConfigSection.noRouteRobotsTypesInherit}}" stepKey="uncheckUseDefault"/>
+        <executeJS function="document.querySelector('{{AdminSeoRobotsConfigSection.noRouteRobotsTypes}}').value = '{{directives}}'; document.querySelector('{{AdminSeoRobotsConfigSection.noRouteRobotsTypes}}').dispatchEvent(new Event('change'));" stepKey="setDirectives"/>
+    </actionGroup>
+</actionGroups>

@@ -117,10 +117,7 @@ class DirectiveMultiselect extends Select
         $disabled = '';
 
         if ($element) {
-            $disabled = $this->getElement()->getCanUseWebsiteValue()
-                || $this->getElement()->getCanUseDefaultValue()
-                || $this->getElement()->getCanRestoreToDefault();
-            $disabled = $disabled ? ' disabled="disabled"' : '';
+            $disabled = $this->getElement()->getDisabled() ? ' disabled="disabled" readonly="1"' : '';
         }
 
         // Render hidden textarea with configuration attached as data attribute

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+  * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+  * GitHub: https://github.com/hryvinskyi
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminSeoRobotsPaginatedFilteredConfigTest">
+        <annotations>
+            <features value="SeoRobotsAdminUi"/>
+            <stories value="Paginated Robots Configuration"/>
+            <title value="Admin can configure paginated filtered robots settings"/>
+            <description value="Verify that admin can enable paginated filtered robots in system configuration"/>
+            <severity value="MAJOR"/>
+            <group value="seo"/>
+            <group value="seo_robots"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <!-- Reset to default -->
+            <actionGroup ref="AdminNavigateToSeoRobotsConfigActionGroup" stepKey="navigateToConfigCleanup"/>
+            <actionGroup ref="AdminExpandSeoRobotsSectionActionGroup" stepKey="expandSectionCleanup"/>
+            <checkOption selector="{{AdminSeoRobotsConfigSection.paginatedFilteredRobotsInherit}}" stepKey="restoreDefault"/>
+            <actionGroup ref="AdminSaveSeoRobotsConfigActionGroup" stepKey="saveConfigCleanup"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Navigate to SEO Robots configuration page -->
+        <actionGroup ref="AdminNavigateToSeoRobotsConfigActionGroup" stepKey="navigateToConfig"/>
+
+        <!-- Expand Meta Robots section -->
+        <actionGroup ref="AdminExpandSeoRobotsSectionActionGroup" stepKey="expandSection"/>
+
+        <!-- First enable SEO Robots Management -->
+        <actionGroup ref="AdminSetSeoRobotsEnabledActionGroup" stepKey="enableSeoRobots">
+            <argument name="enabled" value="1"/>
+        </actionGroup>
+
+        <!-- Enable paginated filtered robots -->
+        <uncheckOption selector="{{AdminSeoRobotsConfigSection.paginatedFilteredRobotsInherit}}" stepKey="uncheckUseDefault"/>
+        <selectOption selector="{{AdminSeoRobotsConfigSection.paginatedFilteredRobots}}" userInput="1" stepKey="enablePaginatedFilteredRobots"/>
+
+        <!-- Save configuration -->
+        <actionGroup ref="AdminSaveSeoRobotsConfigActionGroup" stepKey="saveConfig"/>
+
+        <!-- Verify the settings are saved -->
+        <actionGroup ref="AdminNavigateToSeoRobotsConfigActionGroup" stepKey="navigateToConfigAgain"/>
+        <actionGroup ref="AdminExpandSeoRobotsSectionActionGroup" stepKey="expandSectionAgain"/>
+        <seeOptionIsSelected selector="{{AdminSeoRobotsConfigSection.paginatedFilteredRobots}}" userInput="Yes" stepKey="verifyPaginatedFilteredEnabled"/>
+    </test>
+</tests>

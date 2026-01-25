@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+  * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+  * GitHub: https://github.com/hryvinskyi
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="AdminSeoRobotsConfigSection">
+        <!-- Meta Robots Section Header -->
+        <element name="metaRobotsSection" type="button" selector="#hryvinskyi_seo_robots-head"/>
+        <element name="metaRobotsSectionExpanded" type="text" selector="#hryvinskyi_seo_robots._show"/>
+
+        <!-- Enable SEO Robots Management -->
+        <element name="enabledField" type="select" selector="#hryvinskyi_seo_robots_meta_tag_enabled"/>
+        <element name="enabledFieldInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_enabled_inherit"/>
+
+        <!-- Meta Robots Tag Rules (Dynamic Rows) -->
+        <element name="metaRobotsRulesContainer" type="text" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots"/>
+        <element name="metaRobotsAddRuleButton" type="button" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots button.action-add"/>
+        <element name="metaRobotsRuleRow" type="text" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots tbody tr" parameterized="true"/>
+        <element name="metaRobotsRulePriority" type="input" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots tbody tr:nth-child({{row}}) input[name*='[priority]']" parameterized="true"/>
+        <element name="metaRobotsRulePattern" type="input" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots tbody tr:nth-child({{row}}) input[name*='[pattern]']" parameterized="true"/>
+        <element name="metaRobotsRuleDeleteButton" type="button" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots tbody tr:nth-child({{row}}) button.action-delete" parameterized="true"/>
+
+        <!-- Robots Directives for 404 Pages -->
+        <element name="noRouteRobotsTypes" type="textarea" selector="#hryvinskyi_seo_robots_meta_tag_no_route_robots_types"/>
+        <element name="noRouteRobotsTypesInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_no_route_robots_types_inherit"/>
+
+        <!-- Paginated Robots -->
+        <element name="paginatedRobots" type="select" selector="#hryvinskyi_seo_robots_meta_tag_paginated_robots"/>
+        <element name="paginatedRobotsInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_paginated_robots_inherit"/>
+        <element name="paginatedRobotsType" type="textarea" selector="#hryvinskyi_seo_robots_meta_tag_paginated_robots_type"/>
+        <element name="paginatedRobotsTypeRow" type="textarea" selector="#row_hryvinskyi_seo_robots_meta_tag_paginated_robots_type"/>
+        <element name="paginatedRobotsTypeInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_paginated_robots_type_inherit"/>
+
+        <!-- Paginated Filtered Robots -->
+        <element name="paginatedFilteredRobots" type="select" selector="#hryvinskyi_seo_robots_meta_tag_paginated_filtered_robots"/>
+        <element name="paginatedFilteredRobotsInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_paginated_filtered_robots_inherit"/>
+        <element name="paginatedFilteredRobotsType" type="textarea" selector="#hryvinskyi_seo_robots_meta_tag_paginated_filtered_robots_type"/>
+        <element name="paginatedFilteredRobotsTypeRow" type="textarea" selector="#row_hryvinskyi_seo_robots_meta_tag_paginated_filtered_robots_type"/>
+        <element name="paginatedFilteredRobotsTypeInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_paginated_filtered_robots_type_inherit"/>
+
+        <!-- X-Robots-Tag Header Settings -->
+        <element name="xRobotsHeaderEnabled" type="select" selector="#hryvinskyi_seo_robots_x_header_robots_xheader_enabled"/>
+        <element name="xRobotsHeaderEnabledInherit" type="checkbox" selector="#hryvinskyi_seo_robots_x_header_robots_xheader_enabled_inherit"/>
+
+        <!-- X-Robots-Tag Rules (Dynamic Rows) -->
+        <element name="xRobotsRulesContainer" type="text" selector="#hryvinskyi_seo_robots_x_header_xrobots_rules"/>
+        <element name="xRobotsAddRuleButton" type="button" selector="#hryvinskyi_seo_robots_x_header_xrobots_rules button.action-add"/>
+        <element name="xRobotsRulePriority" type="input" selector="#hryvinskyi_seo_robots_x_header_xrobots_rules tbody tr:nth-child({{row}}) input[name*='[priority]']" parameterized="true"/>
+        <element name="xRobotsRulePattern" type="input" selector="#hryvinskyi_seo_robots_x_header_xrobots_rules tbody tr:nth-child({{row}}) input[name*='[pattern]']" parameterized="true"/>
+        <element name="xRobotsRuleDeleteButton" type="button" selector="#hryvinskyi_seo_robots_x_header_xrobots_rules tbody tr:nth-child({{row}}) button.action-delete" parameterized="true"/>
+
+        <!-- X-Robots-Tag Directives for 404 Pages -->
+        <element name="xRobotsNoRouteTypes" type="textarea" selector="#hryvinskyi_seo_robots_x_header_xrobots_no_route_types"/>
+        <element name="xRobotsNoRouteTypesRow" type="textarea" selector="#row_hryvinskyi_seo_robots_x_header_xrobots_no_route_types"/>
+        <element name="xRobotsNoRouteTypesInherit" type="checkbox" selector="#hryvinskyi_seo_robots_x_header_xrobots_no_route_types_inherit"/>
+
+        <!-- X-Robots Paginated Settings -->
+        <element name="xRobotsPaginatedEnabled" type="select" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_enabled"/>
+        <element name="xRobotsPaginatedEnabledInherit" type="checkbox" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_enabled_inherit"/>
+        <element name="xRobotsPaginatedTypes" type="textarea" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_types"/>
+        <element name="xRobotsPaginatedTypesRow" type="textarea" selector="#row_hryvinskyi_seo_robots_x_header_xrobots_paginated_types"/>
+        <element name="xRobotsPaginatedTypesInherit" type="checkbox" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_types_inherit"/>
+
+        <!-- X-Robots Paginated Filtered Settings -->
+        <element name="xRobotsPaginatedFilteredEnabled" type="select" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_filtered_enabled"/>
+        <element name="xRobotsPaginatedFilteredEnabledInherit" type="checkbox" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_filtered_enabled_inherit"/>
+        <element name="xRobotsPaginatedFilteredTypes" type="textarea" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_filtered_types"/>
+        <element name="xRobotsPaginatedFilteredTypesRow" type="textarea" selector="#row_hryvinskyi_seo_robots_x_header_xrobots_paginated_filtered_types"/>
+        <element name="xRobotsPaginatedFilteredTypesInherit" type="checkbox" selector="#hryvinskyi_seo_robots_x_header_xrobots_paginated_filtered_types_inherit"/>
+
+        <!-- Save Button -->
+        <element name="saveButton" type="button" selector="#save" timeout="30"/>
+    </section>
+</sections>

@@ -10,142 +10,166 @@
         <section id="hryvinskyi_seo">
             <resource>Hryvinskyi_Seo::section_seo_robots</resource>
             <group id="robots" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="100">
-                <label>Meta Robots</label>
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                <label>Robots Configuration</label>
+                <group id="meta_tag" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Enable SEO Robots Management</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="meta_robots" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1"
-                       showInStore="1">
-                    <label>Meta Robots Tag Rules</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\MetaRobotsRules</frontend_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
-                    <comment><![CDATA[Configure meta robots directives per URL pattern. If multiple patterns match, highest priority wins.]]></comment>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                </field>
-                <field id="no_route_robots_types" translate="label" type="textarea" sortOrder="40"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Robots Directives for 404 Pages</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select multiple directives to apply to 404 pages]]></comment>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                </field>
-                <field id="paginated_robots" translate="label" type="select" sortOrder="50" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Add robots to '?p=' to paginated content</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                </field>
-                <field id="paginated_robots_type" translate="label comment" type="textarea" sortOrder="60" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Robots Directives for Paginated Content</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select multiple directives to apply to pages with only ?p= parameter (no filters).]]></comment>
-                    <depends>
-                        <field id="enabled">1</field>
-                        <field id="paginated_robots">1</field>
-                    </depends>
-                </field>
-                <field id="paginated_filtered_robots" translate="label" type="select" sortOrder="62" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Add robots to paginated content with filters</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Apply robots to pages with ?p= and additional query parameters (e.g., filters).]]></comment>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                </field>
-                <field id="paginated_filtered_robots_type" translate="label comment" type="textarea" sortOrder="64" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Robots Directives for Paginated Content with Filters</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select directives to apply to pages with ?p= and other query parameters (pagination + filters).]]></comment>
-                    <depends>
-                        <field id="enabled">1</field>
-                        <field id="paginated_filtered_robots">1</field>
-                    </depends>
-                </field>
-                <field id="robots_xheader_enabled" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable X-Robots-Tag Header</label>
-                    <comment><![CDATA[If enabled, the X-Robots-Tag header will mirror the robots meta tag directives from the site. If disabled, only the meta tag will be used.]]></comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="xrobots_rules" translate="label comment" sortOrder="80" showInDefault="1" showInWebsite="1"
-                       showInStore="1">
-                    <label>X-Robots-Tag HTTP Header Rules</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\XRobotsTagRules</frontend_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
-                    <comment><![CDATA[Configure X-Robots-Tag HTTP header per URL pattern. Supports bot-specific directives (e.g., googlebot: noindex).]]></comment>
-                    <depends>
-                        <field id="robots_xheader_enabled">1</field>
-                    </depends>
-                </field>
-                <field id="xrobots_no_route_types" translate="label comment" type="textarea" sortOrder="90"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>X-Robots-Tag Directives for 404 Pages</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select X-Robots-Tag directives to apply to 404 pages via HTTP header. If empty, falls back to meta robots 404 directives.]]></comment>
-                    <depends>
-                        <field id="robots_xheader_enabled">1</field>
-                    </depends>
-                </field>
-                <field id="xrobots_paginated_enabled" translate="label" type="select" sortOrder="100" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Add X-Robots-Tag to '?p=' Paginated Content</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[If enabled, applies X-Robots-Tag header to paginated pages (page > 1).]]></comment>
-                    <depends>
-                        <field id="robots_xheader_enabled">1</field>
-                    </depends>
-                </field>
-                <field id="xrobots_paginated_types" translate="label comment" type="textarea" sortOrder="110" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>X-Robots-Tag Directives for Paginated Content</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select X-Robots-Tag directives to apply to paginated pages (only ?p=) via HTTP header. If empty, falls back to meta robots paginated directives.]]></comment>
-                    <depends>
-                        <field id="robots_xheader_enabled">1</field>
-                        <field id="xrobots_paginated_enabled">1</field>
-                    </depends>
-                </field>
-                <field id="xrobots_paginated_filtered_enabled" translate="label" type="select" sortOrder="112" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Add X-Robots-Tag to Paginated Content with Filters</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[If enabled, applies X-Robots-Tag header to paginated pages with additional query parameters (e.g., filters).]]></comment>
-                    <depends>
-                        <field id="robots_xheader_enabled">1</field>
-                    </depends>
-                </field>
-                <field id="xrobots_paginated_filtered_types" translate="label comment" type="textarea" sortOrder="114" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>X-Robots-Tag Directives for Paginated Content with Filters</label>
-                    <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
-                    <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
-                    <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
-                    <comment><![CDATA[Select X-Robots-Tag directives for pages with ?p= and other query parameters. If empty, falls back to meta robots paginated filtered directives.]]></comment>
-                    <depends>
-                        <field id="robots_xheader_enabled">1</field>
-                        <field id="xrobots_paginated_filtered_enabled">1</field>
-                    </depends>
-                </field>
+                    <label>Meta Robots</label>
+                    <comment><![CDATA[Meta Robots configuration]]></comment>
+
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                           showInStore="1" canRestore="1">
+                        <label>Enable Meta Robots Management</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>hryvinskyi_seo/robots/enabled</config_path>
+                    </field>
+                    <field id="meta_robots" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1"
+                           showInStore="1" canRestore="1">
+                        <label>Meta Robots Tag Rules</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\MetaRobotsRules</frontend_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
+                        <comment><![CDATA[Configure meta robots directives per URL pattern. If multiple patterns match, highest priority wins.]]></comment>
+                        <config_path>hryvinskyi_seo/robots/meta_robots</config_path>
+                        <depends>
+                            <field id="enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="no_route_robots_types" translate="label" type="textarea" sortOrder="40"
+                           showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Robots Directives for 404 Pages</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                        <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                        <comment><![CDATA[Select multiple directives to apply to 404 pages]]></comment>
+                        <config_path>hryvinskyi_seo/robots/no_route_robots_types</config_path>
+                        <depends>
+                            <field id="enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="paginated_robots" translate="label" type="select" sortOrder="50" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Add robots to '?p=' to paginated content</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>hryvinskyi_seo/robots/paginated_robots</config_path>
+                        <depends>
+                            <field id="enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="paginated_robots_type" translate="label comment" type="textarea" sortOrder="60" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Robots Directives for Paginated Content</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                        <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                        <comment><![CDATA[Select multiple directives to apply to pages with only ?p= parameter (no filters).]]></comment>
+                        <config_path>hryvinskyi_seo/robots/paginated_robots_type</config_path>
+                        <depends>
+                            <field id="enabled">1</field>
+                            <field id="paginated_robots">1</field>
+                        </depends>
+                    </field>
+                    <field id="paginated_filtered_robots" translate="label" type="select" sortOrder="62" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Add robots to paginated content with filters</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Apply robots to pages with ?p= and additional query parameters (e.g., filters).]]></comment>
+                        <config_path>hryvinskyi_seo/robots/paginated_filtered_robots</config_path>
+                        <depends>
+                            <field id="enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="paginated_filtered_robots_type" translate="label comment" type="textarea" sortOrder="64" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Robots Directives for Paginated Content with Filters</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                        <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                        <comment><![CDATA[Select directives to apply to pages with ?p= and other query parameters (pagination + filters).]]></comment>
+                        <config_path>hryvinskyi_seo/robots/paginated_filtered_robots_type</config_path>
+                        <depends>
+                            <field id="enabled">1</field>
+                            <field id="paginated_filtered_robots">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="x_header" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>X-Robots Header</label>
+                    <comment><![CDATA[X-Robots-Tag Header Robots Configuration]]></comment>
+                    <field id="robots_xheader_enabled" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable X-Robots-Tag Header Management</label>
+                        <comment><![CDATA[If enabled, the X-Robots-Tag header will mirror the robots meta tag directives from the site. If disabled, only the meta tag will be used.]]></comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>hryvinskyi_seo/robots/robots_xheader_enabled</config_path>
+                    </field>
+                    <field id="xrobots_rules" translate="label comment" sortOrder="80" showInDefault="1" showInWebsite="1"
+                           showInStore="1" canRestore="1">
+                        <label>X-Robots-Tag HTTP Header Rules</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\XRobotsTagRules</frontend_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
+                        <comment><![CDATA[Configure X-Robots-Tag HTTP header per URL pattern. Supports bot-specific directives (e.g., googlebot: noindex).]]></comment>
+                        <config_path>hryvinskyi_seo/robots/xrobots_rules</config_path>
+                        <depends>
+                            <field id="robots_xheader_enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="xrobots_no_route_types" translate="label comment" type="textarea" sortOrder="90"
+                           showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>X-Robots-Tag Directives for 404 Pages</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                        <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                        <comment><![CDATA[Select X-Robots-Tag directives to apply to 404 pages via HTTP header. If empty, falls back to meta robots 404 directives.]]></comment>
+                        <config_path>hryvinskyi_seo/robots/xrobots_no_route_types</config_path>
+                        <depends>
+                            <field id="robots_xheader_enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="xrobots_paginated_enabled" translate="label" type="select" sortOrder="100" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Add X-Robots-Tag to '?p=' Paginated Content</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[If enabled, applies X-Robots-Tag header to paginated pages (page > 1).]]></comment>
+                        <config_path>hryvinskyi_seo/robots/xrobots_paginated_enabled</config_path>
+                        <depends>
+                            <field id="robots_xheader_enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="xrobots_paginated_types" translate="label comment" type="textarea" sortOrder="110" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>X-Robots-Tag Directives for Paginated Content</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                        <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                        <comment><![CDATA[Select X-Robots-Tag directives to apply to paginated pages (only ?p=) via HTTP header. If empty, falls back to meta robots paginated directives.]]></comment>
+                        <config_path>hryvinskyi_seo/robots/xrobots_paginated_types</config_path>
+                        <depends>
+                            <field id="robots_xheader_enabled">1</field>
+                            <field id="xrobots_paginated_enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="xrobots_paginated_filtered_enabled" translate="label" type="select" sortOrder="112" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Add X-Robots-Tag to Paginated Content with Filters</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[If enabled, applies X-Robots-Tag header to paginated pages with additional query parameters (e.g., filters).]]></comment>
+                        <config_path>hryvinskyi_seo/robots/xrobots_paginated_filtered_enabled</config_path>
+                        <depends>
+                            <field id="robots_xheader_enabled">1</field>
+                        </depends>
+                    </field>
+                    <field id="xrobots_paginated_filtered_types" translate="label comment" type="textarea" sortOrder="114" showInDefault="1"
+                           showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>X-Robots-Tag Directives for Paginated Content with Filters</label>
+                        <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\RobotsTagSelectorField</frontend_model>
+                        <source_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Source\DirectiveList</source_model>
+                        <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\DirectiveArray</backend_model>
+                        <comment><![CDATA[Select X-Robots-Tag directives for pages with ?p= and other query parameters. If empty, falls back to meta robots paginated filtered directives.]]></comment>
+                        <config_path>hryvinskyi_seo/robots/xrobots_paginated_filtered_types</config_path>
+                        <depends>
+                            <field id="robots_xheader_enabled">1</field>
+                            <field id="xrobots_paginated_filtered_enabled">1</field>
+                        </depends>
+                    </field>
+                </group>
             </group>
         </section>
     </system>

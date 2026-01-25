@@ -326,9 +326,7 @@ define(['jquery', 'mage/translate'], function ($, $t) {
         }
 
         createOptionElement(directive) {
-            const $option = $('<div class="robots-tag-selector-option"></div>');
-            $option.data('value', directive.value);
-
+            const $option = $('<div class="robots-tag-selector-option" data-value="' + directive.value + '"></div>');
             if (this.isValueSelected(directive.value)) {
                 $option.addClass('disabled selected');
             }

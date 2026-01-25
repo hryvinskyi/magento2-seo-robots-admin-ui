@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+  * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+  * GitHub: https://github.com/hryvinskyi
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminSeoRobotsDisableTest">
+        <annotations>
+            <features value="SeoRobotsAdminUi"/>
+            <stories value="SEO Robots Configuration"/>
+            <title value="Admin can disable SEO Robots Management"/>
+            <description value="Verify that admin can disable SEO Robots Management in system configuration"/>
+            <severity value="CRITICAL"/>
+            <group value="seo"/>
+            <group value="seo_robots"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Navigate to SEO Robots configuration page -->
+        <actionGroup ref="AdminNavigateToSeoRobotsConfigActionGroup" stepKey="navigateToConfig"/>
+
+        <!-- Expand Meta Robots section -->
+        <actionGroup ref="AdminExpandSeoRobotsSectionActionGroup" stepKey="expandSection"/>
+
+        <!-- Disable SEO Robots Management -->
+        <actionGroup ref="AdminSetSeoRobotsEnabledActionGroup" stepKey="disableSeoRobots">
+            <argument name="enabled" value="0"/>
+        </actionGroup>
+
+        <!-- Save configuration -->
+        <actionGroup ref="AdminSaveSeoRobotsConfigActionGroup" stepKey="saveConfig"/>
+
+        <!-- Verify the field is disabled after save -->
+        <actionGroup ref="AdminNavigateToSeoRobotsConfigActionGroup" stepKey="navigateToConfigAgain"/>
+        <actionGroup ref="AdminExpandSeoRobotsSectionActionGroup" stepKey="expandSectionAgain"/>
+        <seeOptionIsSelected selector="{{AdminSeoRobotsConfigSection.enabledField}}" userInput="No" stepKey="verifyDisabled"/>
+    </test>
+</tests>

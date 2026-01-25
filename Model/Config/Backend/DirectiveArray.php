@@ -20,20 +20,17 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 class DirectiveArray extends Value
 {
-    private Json $serializer;
-
     public function __construct(
         Context $context,
         Registry $registry,
         ScopeConfigInterface $config,
         TypeListInterface $cacheTypeList,
+        private readonly Json $serializer,
         ?AbstractResource $resource = null,
         ?AbstractDb $resourceCollection = null,
-        array $data = [],
-        ?Json $serializer = null
+        array $data = []
     ) {
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
-        $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()->get(Json::class);
     }
 
     /**
