@@ -45,7 +45,7 @@ class MetaRobotsRules extends AbstractFieldArray
         $this->addColumn('priority', [
             'label' => __('Priority'),
             'class' => 'validate-number',
-            'style' => 'width: 50px'
+            'style' => 'width: 60px'
         ]);
 
         $this->addColumn('pattern', [

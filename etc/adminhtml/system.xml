@@ -27,7 +27,7 @@
                         <label>Meta Robots Tag Rules</label>
                         <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\MetaRobotsRules</frontend_model>
                         <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
-                        <comment><![CDATA[Configure meta robots directives per URL pattern. If multiple patterns match, highest priority wins.]]></comment>
+                        <comment><![CDATA[Configure meta robots directives per URL pattern. Higher priority number wins when multiple sources apply.<br/><br/><strong>Priority scale:</strong> URL patterns (configurable), Category (1000) < Product (2000) < 404 Page (5000) < Pagination (10000).<br/>Set URL pattern priority higher than default to override category/product/etc... robots.]]></comment>
                         <config_path>hryvinskyi_seo/robots/meta_robots</config_path>
                         <depends>
                             <field id="enabled">1</field>
@@ -105,7 +105,7 @@
                         <label>X-Robots-Tag HTTP Header Rules</label>
                         <frontend_model>Hryvinskyi\SeoRobotsAdminUi\Block\Adminhtml\System\Config\Form\Field\XRobotsTagRules</frontend_model>
                         <backend_model>Hryvinskyi\SeoRobotsAdminUi\Model\Config\Backend\RobotsRules</backend_model>
-                        <comment><![CDATA[Configure X-Robots-Tag HTTP header per URL pattern. Supports bot-specific directives (e.g., googlebot: noindex).]]></comment>
+                        <comment><![CDATA[Configure X-Robots-Tag HTTP header per URL pattern. Higher priority number wins when multiple sources apply.<br/><br/><strong>Priority scale:</strong> URL patterns (configurable) < Category (1000) < Product (2000) < 404 Page (5000) < Pagination (10000) < HTTPS (15000).<br/>Supports bot-specific directives (e.g., googlebot: noindex).]]></comment>
                         <config_path>hryvinskyi_seo/robots/xrobots_rules</config_path>
                         <depends>
                             <field id="robots_xheader_enabled">1</field>

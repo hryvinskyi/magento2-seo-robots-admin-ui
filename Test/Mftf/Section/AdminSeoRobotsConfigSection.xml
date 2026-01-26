@@ -26,6 +26,7 @@
         <element name="metaRobotsRuleDeleteButton" type="button" selector="#hryvinskyi_seo_robots_meta_tag_meta_robots tbody tr:nth-child({{row}}) button.action-delete" parameterized="true"/>
 
         <!-- Robots Directives for 404 Pages -->
+        <element name="noRouteRobotsRulesRow" type="textarea" selector="#row_hryvinskyi_seo_robots_meta_tag_no_route_robots_types"/>
         <element name="noRouteRobotsTypes" type="textarea" selector="#hryvinskyi_seo_robots_meta_tag_no_route_robots_types"/>
         <element name="noRouteRobotsTypesInherit" type="checkbox" selector="#hryvinskyi_seo_robots_meta_tag_no_route_robots_types_inherit"/>
 
